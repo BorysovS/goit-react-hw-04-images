@@ -8,18 +8,17 @@ const modalRoot = document.querySelector('#modal-root');
 
 export const Modal = ({ onClose, imageModal, title }) => {
   useEffect(() => {
+    const onEscClick = evt => {
+      if (evt.code === 'Escape') {
+        onClose();
+      }
+    };
     window.addEventListener('keydown', onEscClick);
 
     return () => {
       window.removeEventListener('keydown', onEscClick);
     };
-  }, []);
-
-  const onEscClick = evt => {
-    if (evt.code === 'Escape') {
-      onClose();
-    }
-  };
+  }, [onClose]);
 
   const onOverlayClick = evt => {
     if (evt.currentTarget === evt.target) {
