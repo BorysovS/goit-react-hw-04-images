@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import toast from 'react-hot-toast';
 // import { Formik, Field, Form } from 'formik';
@@ -10,51 +10,46 @@ import {
   SearchFormInput,
 } from './SearchBar.styled';
 
-export default class SearchBar extends Component {
-  state = {
-    searchQuery: '',
-  };
+export const SearchBar = ({ onSubmit }) => {
+  const [searchQuery, setSearchQuery] = useState('');
 
-  handleOnChage = evt => {
+  const handleOnChage = evt => {
     const query = evt.currentTarget.value;
-    this.setState({ searchQuery: query.toLowerCase().trim() });
+    setSearchQuery(query.toLowerCase().trim());
   };
 
-  handleOnSubmit = evt => {
-    const { searchQuery } = this.state;
+  const handleOnSubmit = evt => {
     if (!searchQuery) {
       toast.error('Please, enter find name', { duration: 1000 });
     }
     evt.preventDefault();
-    this.props.onSubmit(searchQuery);
-    this.reset();
+    onSubmit(searchQuery);
+    reset();
   };
 
-  reset() {
-    this.setState({ searchQuery: '' });
-  }
+  const reset = () => {
+    setSearchQuery('');
+  };
 
-  render() {
-    return (
-      <SearchbarHeader>
-        <SearchForm onSubmit={this.handleOnSubmit}>
-          <SearchFormButton type="submit">
-            <SearchFormButtonLabel>Search</SearchFormButtonLabel>
-          </SearchFormButton>
-          <SearchFormInput
-            type="text"
-            name="searchQuery"
-            onChange={this.handleOnChage}
-            value={this.state.searchQuery}
-            autoComplete="off"
-            autoFocus
-            placeholder="Search images and photos"
-          />
-        </SearchForm>
-      </SearchbarHeader>
-    );
-  }
-}
+  return (
+    <SearchbarHeader>
+      <SearchForm onSubmit={handleOnSubmit}>
+        <SearchFormButton type="submit">
+          <SearchFormButtonLabel>Search</SearchFormButtonLabel>
+        </SearchFormButton>
+        <SearchFormInput
+          type="text"
+          name="searchQuery"
+          onChange={handleOnChage}
+          value={searchQuery}
+          autoComplete="off"
+          autoFocus
+          placeholder="Search images and photos"
+        />
+      </SearchForm>
+    </SearchbarHeader>
+  );
+};
 
 SearchBar.propTypes = {
   onSubmit: PropTypes.func.isRequired,

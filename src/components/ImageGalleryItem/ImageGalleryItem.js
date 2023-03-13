@@ -1,22 +1,32 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
+import { Modal } from '../Modal/Modal';
 
 import { GalleryItemImage, GalleryItem } from './ImaeGalleryItem.styled';
 
-export class ImageGalleryItem extends Component {
-  render() {
-    const { items, onClick } = this.props;
-    return items.map(({ webformatURL, largeImageURL, id, tags }) => {
-      return (
-        <GalleryItem key={id} onClick={() => onClick(largeImageURL, tags)}>
-          <GalleryItemImage src={webformatURL} alt={tags} />
-        </GalleryItem>
-      );
-    });
-  }
-}
+export const ImageGalleryItem = ({
+  item: { webformatURL, largeImageURL, tags },
+}) => {
+  const [isShowModal, setIsShowModal] = useState(false);
+
+  return (
+    <>
+      <GalleryItem onClick={() => setIsShowModal(true)}>
+        <GalleryItemImage src={webformatURL} alt={tags} />
+      </GalleryItem>
+      {isShowModal && (
+        <Modal
+          imageModal={largeImageURL}
+          title={tags}
+          onClose={() => {
+            setIsShowModal(false);
+          }}
+        />
+      )}
+    </>
+  );
+};
 
 ImageGalleryItem.propTypes = {
-  items: PropTypes.array.isRequired,
-  onClick: PropTypes.func.isRequired,
+  item: PropTypes.object.isRequired,
 };

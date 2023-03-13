@@ -11,7 +11,7 @@ const instance = axios.create({
 });
 
 export const getImages = async (query, page) => {
-  const response = await instance(`?q=${query}&page=${page}`);
-  const data = await response.data;
+  const response = await instance.get(`?q=${query}&page=${page}`);
+  const data = response.data;
   return data;
 };
