@@ -15,10 +15,10 @@ export const App = () => {
   const [query, setQuery] = useState('')
   const [page, setPage] = useState(1)
   const [items, setItems] = useState([]);
-  const [totalHits, setTotalHits] = useState(1);
+  // const [totalHits, setTotalHits] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [visibleBtn, setVisibleBtn] = useState(false);
-  const [error, setError] = useState('');
+  // const [error, setError] = useState('');
 
 const scrollOnMoreButton = () => {
     animateScroll.scrollToBottom({
@@ -53,7 +53,7 @@ const scrollOnMoreButton = () => {
 
         const data = await getImages(query, page);
         setItems(pervState => [...pervState, ...data.hits]);
-        setTotalHits(data.totalHits);
+        // setTotalHits(data.totalHits);
 
         if (data.totalHits === 0) {
           toast.error('Nothing was found for your request', {
@@ -67,7 +67,8 @@ const scrollOnMoreButton = () => {
         
       }
       catch (error) {
-        setError(error.message);
+        // setError(error.message);
+        console.log(error.message);
       }
       finally {
         setIsLoading(false);

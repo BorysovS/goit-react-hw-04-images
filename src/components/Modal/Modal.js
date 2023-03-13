@@ -13,6 +13,7 @@ export const Modal = ({ onClose, imageModal, title }) => {
         onClose();
       }
     };
+
     window.addEventListener('keydown', onEscClick);
 
     return () => {
